@@ -22,7 +22,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t flask-app .
+          docker build -t flask-app:latest .
 
   test:
     runs-on: ubuntu-latest
