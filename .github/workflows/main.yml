@@ -85,14 +85,14 @@ jobs:
       - name: Check if ACR exists
         id: check_acr
         run: |
-            acr_exists=$(az acr show --name myACR --query name -o tsv 2>/dev/null || echo "false")
+            acr_exists=$(az acr show --name myacr --query name -o tsv 2>/dev/null || echo "false")
             echo "::set-output name=exists::$acr_exists"
       - name: Create Azure Container Registry
         if: steps.check_acr.outputs.exists == 'false'
         run: | 
-          az acr create --resource-group myResourceGroup --name myACR --sku Basic
-          acr_username=$(az acr credential show --name myACR --query username -o tsv)
-          acr_password=$(az acr credential show --name myACR --query passwords[0].value -o tsv)
+          az acr create --resource-group myResourceGroup --name myacr --sku Basic
+          acr_username=$(az acr credential show --name myacr --query username -o tsv)
+          acr_password=$(az acr credential show --name myacr --query passwords[0].value -o tsv)
           # Update GitHub Secrets
           echo "::add-mask::$acr_password" # Mask the password in logs
           echo "ACR_USERNAME=$acr_username" >> $GITHUB_ENV
