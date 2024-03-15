@@ -90,9 +90,9 @@ jobs:
       - name: Create Azure Container Registry
         if: steps.check_acr.outputs.exists == 'false'
         run: | 
-          az acr create --resource-group myResourceGroup --name kinderdll-flask-app --sku Basic
-          acr_username=$(az acr credential show --name kinderdll-flask-app --query username -o tsv)
-          acr_password=$(az acr credential show --name kinderdll-flask-app --query passwords[0].value -o tsv)
+          az acr create --resource-group myResourceGroup --name kinderdllflaskapp --sku Basic
+          acr_username=$(az acr credential show --name kinderdllflaskapp --query username -o tsv)
+          acr_password=$(az acr credential show --name kinderdllflaskapp --query passwords[0].value -o tsv)
           # Update GitHub Secrets
           echo "::add-mask::$acr_password" # Mask the password in logs
           echo "ACR_USERNAME=$acr_username" >> $GITHUB_ENV
@@ -107,4 +107,4 @@ jobs:
 
       - name: Deploy ACR Image to Azure Container Instance
         run: |
-          az container create --resource-group myResourceGroup --name myContainer --image kinderdll-flask-app.azurecr.io/flask-app:latest --cpu 1 --memory 1.5 --registry-login-server kinderdll-flask-app.azurecr.io --registry-username $ACR_USERNAME --registry-password $ACR_PASSWORD --dns-name-label mycontainer --ports 80
+          az container create --resource-group myResourceGroup --name myContainer --image kinderdllflaskapp.azurecr.io/flask-app:latest --cpu 1 --memory 1.5 --registry-login-server kinderdllflaskapp.azurecr.io --registry-username $ACR_USERNAME --registry-password $ACR_PASSWORD --dns-name-label mycontainer --ports 80
