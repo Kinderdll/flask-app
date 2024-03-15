@@ -90,15 +90,20 @@ jobs:
       - name: Create Azure Container Registry
         if: steps.check_acr.outputs.exists == 'false'
         run: | 
-          az acr create --resource-group myResourceGroup --name kinderdllflaskapp --sku Basic -admin-enabled true
+          az acr create --resource-group myResourceGroup --name kinderdllflaskapp --sku Basic
+      
+      - name: Enable admin access for Azure Container Registry
+        run: az acr update --name kinderdllflaskapp --admin-enabled true
+          
+      - name: Update creds
+        run : |
           acr_username=$(az acr credential show --name kinderdllflaskapp --query username -o tsv)
           acr_password=$(az acr credential show --name kinderdllflaskapp --query passwords[0].value -o tsv)
           # Update GitHub Secrets
           echo "::add-mask::$acr_password" # Mask the password in logs
           echo "ACR_USERNAME=$acr_username" >> $GITHUB_ENV
           echo "ACR_PASSWORD=$acr_password" >> $GITHUB_ENV
-  
-
+          
       - name: Build and Push Docker Image to ACR
         run: |
           docker build -t flask-app:latest .
