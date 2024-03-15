@@ -85,14 +85,14 @@ jobs:
       - name: Check if ACR exists
         id: check_acr
         run: |
-            acr_exists=$(az acr show --name myacr --query name -o tsv 2>/dev/null || echo "false")
+            acr_exists=$(az acr show --name kinderdll-flask-app --query name -o tsv 2>/dev/null || echo "false")
             echo "::set-output name=exists::$acr_exists"
       - name: Create Azure Container Registry
         if: steps.check_acr.outputs.exists == 'false'
         run: | 
-          az acr create --resource-group myResourceGroup --name myacr --sku Basic
-          acr_username=$(az acr credential show --name myacr --query username -o tsv)
-          acr_password=$(az acr credential show --name myacr --query passwords[0].value -o tsv)
+          az acr create --resource-group myResourceGroup --name kinderdll-flask-app --sku Basic
+          acr_username=$(az acr credential show --name kinderdll-flask-app --query username -o tsv)
+          acr_password=$(az acr credential show --name kinderdll-flask-app --query passwords[0].value -o tsv)
           # Update GitHub Secrets
           echo "::add-mask::$acr_password" # Mask the password in logs
           echo "ACR_USERNAME=$acr_username" >> $GITHUB_ENV
@@ -102,9 +102,9 @@ jobs:
       - name: Build and Push Docker Image to ACR
         run: |
           docker build -t flask-app:latest .
-          docker tag myapp myacr.azurecr.io/flask-app:latest
-          docker push myacr.azurecr.io/flask-app:latest
+          docker tag myapp kinderdll-flask-app.azurecr.io/flask-app:latest
+          docker push kinderdll-flask-app.azurecr.io/flask-app:latest
 
       - name: Deploy ACR Image to Azure Container Instance
         run: |
-          az container create --resource-group myResourceGroup --name myContainer --image myacr.azurecr.io/flask-app:latest --cpu 1 --memory 1.5 --registry-login-server myacr.azurecr.io --registry-username $ACR_USERNAME --registry-password $ACR_PASSWORD --dns-name-label mycontainer --ports 80
+          az container create --resource-group myResourceGroup --name myContainer --image kinderdll-flask-app.azurecr.io/flask-app:latest --cpu 1 --memory 1.5 --registry-login-server kinderdll-flask-app.azurecr.io --registry-username $ACR_USERNAME --registry-password $ACR_PASSWORD --dns-name-label mycontainer --ports 80
