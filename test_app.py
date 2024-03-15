@@ -18,7 +18,7 @@ class TestApp(unittest.TestCase):
 
     def test_create_user_route(self):
         tester = app.test_client(self)
-        response = tester.post('/create_user', data=dict(username="test1", email="test1@gmail.com"))
+        response = tester.post('/create_user', data=dict(username="test4", email="test4@gmail.com"))
         self.assertEqual(response.status_code, 302)
 
     def test_users_route(self):
