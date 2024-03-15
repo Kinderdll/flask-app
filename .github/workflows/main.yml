@@ -93,7 +93,7 @@ jobs:
           az acr create --resource-group myResourceGroup --name kinderdllflaskapp --sku Basic
       
       - name: Enable admin access for Azure Container Registry
-        run: az acr update --name kinderdllflaskapp --admin-enabled true
+        run: az acr update --resource-group myResourceGroup --name kinderdllflaskapp --admin-enabled true
           
       - name: Update creds
         run : |
