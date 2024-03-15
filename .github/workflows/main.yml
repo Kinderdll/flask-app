@@ -22,8 +22,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t kinderdll/flask-app .
-          docker image inspect kinderdll/flask-app:latest > /dev/null
+          docker build -t flask-app .
 
   test:
     runs-on: ubuntu-latest
@@ -40,7 +39,7 @@ jobs:
       - name: Run Tests
         run: python -m unittest test_app.py
 
-  push_to_dockerhub:
+  push-to-dockerhub:
     runs-on: ubuntu-latest
     needs: test
     steps:
@@ -53,5 +52,8 @@ jobs:
         run: |
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
+      - name: Tag Docker Image
+        run: docker tag flask-app $DOCKER_USERNAME/flask-app:latest
+        
       - name: Push Docker Image to Docker Hub
-        run: docker push kinderdll/flask-app
+        run: docker push $DOCKER_USERNAME/flask-app:latest
