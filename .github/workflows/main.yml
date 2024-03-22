@@ -94,7 +94,21 @@ jobs:
       
       - name: Enable admin access for Azure Container Registry
         run: az acr update --resource-group myResourceGroup --name kinderdllflaskapp --admin-enabled true
-          
+
+      - name: Check if ACR is created
+        id: check_acr_created
+        run: |
+          while true; do
+            acr_created=$(az acr show --name kinderdllflaskapp --query name -o tsv 2>/dev/null || echo "false")
+            if [ "$acr_created" = "false" ]; then
+              echo "ACR does not exist, sleeping for 30 seconds..."
+              sleep 30
+            else
+              echo "::set-output name=exists::$acr_created"
+              break
+            fi
+          done
+      
       - name: Update creds
         run : |
           acr_username=$(az acr credential show --name kinderdllflaskapp --query username -o tsv)
