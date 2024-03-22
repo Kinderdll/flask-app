@@ -125,6 +125,10 @@ jobs:
           docker login kinderdllflaskapp.azurecr.io -u $ACR_USERNAME -p $ACR_PASSWORD
           docker push kinderdllflaskapp.azurecr.io/flask-app:latest
 
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Deploy ACR Image to Azure Container Instance
         run: |
           az container create --resource-group myResourceGroup --name kinderdll-flask-app --image kinderdllflaskapp.azurecr.io/flask-app:latest --cpu 1 --memory 1.5 --registry-login-server kinderdllflaskapp.azurecr.io --registry-username $ACR_USERNAME --registry-password $ACR_PASSWORD --dns-name-label mycontainer --ports 9000
