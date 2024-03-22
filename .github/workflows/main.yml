@@ -85,7 +85,7 @@ jobs:
       - name: Check if ACR exists
         id: check_acr
         run: |
-            acr_exists=$(az acr show --name kinderdll-flask-app --query name -o tsv 2>/dev/null || echo "false")
+            acr_exists=$(az acr show --name kinderdllflaskapp --query name -o tsv 2>/dev/null || echo "false")
             echo "::set-output name=exists::$acr_exists"
       - name: Create Azure Container Registry
         if: steps.check_acr.outputs.exists == 'false'
