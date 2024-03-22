@@ -122,6 +122,7 @@ jobs:
         run: |
           docker build -t flask-app:latest .
           docker tag flask-app:latest kinderdllflaskapp.azurecr.io/flask-app:latest
+          docker login kinderdllflaskapp.azurecr.io -u $ACR_USERNAME -p ACR_PASSWORD
           docker push kinderdllflaskapp.azurecr.io/flask-app:latest
 
       - name: Deploy ACR Image to Azure Container Instance
