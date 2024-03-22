@@ -19,9 +19,12 @@ COPY . .
 #COPY instance /app/instance
 #COPY migrations /app/migrations
 #Migrations
-RUN flask db init
-RUN flask db migrate
-RUN flask db upgrade
+RUN flask db init \
+    && flask db migrate \
+    && flask db upgrade \
+    && apt-get update \
+    && apt-get install -y sqlite3 \
+    && sqlite3 instance/Users.db < data/dummy_data.sql
 
 EXPOSE 9000
 

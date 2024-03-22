@@ -1,10 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
-from models import db, User
-
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-
+from models import db, User
 
 
 app = Flask(__name__)
