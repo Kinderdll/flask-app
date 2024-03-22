@@ -127,4 +127,4 @@ jobs:
 
       - name: Deploy ACR Image to Azure Container Instance
         run: |
-          az container create --resource-group myResourceGroup --name kinderdll-flask-app --image kinderdllflaskapp.azurecr.io/flask-app:latest --cpu 1 --memory 1.5 --registry-login-server kinderdllflaskapp.azurecr.io --registry-username $ACR_USERNAME --registry-password $ACR_PASSWORD --dns-name-label mycontainer --ports 80
+          az container create --resource-group myResourceGroup --name kinderdll-flask-app --image kinderdllflaskapp.azurecr.io/flask-app:latest --cpu 1 --memory 1.5 --registry-login-server kinderdllflaskapp.azurecr.io --registry-username $ACR_USERNAME --registry-password $ACR_PASSWORD --dns-name-label mycontainer --ports 9000

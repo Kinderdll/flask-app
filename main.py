@@ -14,10 +14,6 @@ db.init_app(app)
 migrate = Migrate(app, db)
 
 
-
-def create_tables():
-    db.create_all()
-    
 @app.route('/')
 def index():
     return render_template('index.html')
