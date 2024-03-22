@@ -1,2 +1,5 @@
 __pycache__
 myenv
+.DS_STORE
+steps.txt
+final_project.zip*

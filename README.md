@@ -31,7 +31,7 @@ docker run --name my_flask_app -p 9000:9000 flask-app
 Access the application in your web browser at http://localhost:9000.
 
 ## Directory Structure
-* app/: Contains the Flask application code.
+
 * data/: Contains database migration scripts.
 * tests_app.py: Contains unit tests for the application.
 * Dockerfile: Defines the Docker image configuration.
