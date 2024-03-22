@@ -121,7 +121,7 @@ jobs:
       - name: Build and Push Docker Image to ACR
         run: |
           docker build -t flask-app:latest .
-          docker tag myapp kinderdll-flask-app.azurecr.io/flask-app:latest
+          docker tag flask-app:latest kinderdll-flask-app.azurecr.io/flask-app:latest
           docker push kinderdll-flask-app.azurecr.io/flask-app:latest
 
       - name: Deploy ACR Image to Azure Container Instance
