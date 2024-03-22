@@ -23,7 +23,7 @@ RUN flask db init
 RUN flask db migrate
 RUN flask db upgrade
 
-EXPOSE 5000
+EXPOSE 9000
 
 CMD ["python", "main.py"]
 
